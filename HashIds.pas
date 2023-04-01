@@ -118,10 +118,10 @@ begin
       except
         on E : Exception do
         begin
-          raise Exception.Create('Errro where convering string "' + list[n] + '" to a number: ' + E.Message);
+          raise Exception.Create('Error where convering string "' + list[n] + '" to a number: ' + E.Message);
         end;
       end;
-      if nums[n] <= 0 then raise Exception.Create('Id must be greather than zero');
+      if nums[n] < 0 then raise Exception.Create('Id must be greather or equal to zero');
     end;
   finally
     list.Free;
@@ -134,7 +134,6 @@ var
   num : TIDs;
 begin
   Result:='';
-  if Id = 0 then Exit;
   SetLength(num,1);
   num[Low(num)]:=Id;
   Result:=Encode(num);
@@ -238,6 +237,8 @@ begin
       sAlphabet:=ConsistentShuffle(sAlphabet,sLottery+Self.Salt+sAlphabet);
       Result[n]:=Unhash(HashList[n],sAlphabet);
     end;
+    if Encode(Result) <> Hash then
+      SetLength(Result, 0);
   finally
     HashList.Free;
   end;
