@@ -52,7 +52,7 @@ begin
 
   if Length(Alphabet) = 0
   then Self.Alphabet:=cAlphabet
-  else Self.Alphabet:=Salt;
+  else Self.Alphabet:=Alphabet;
 
   Self.Separators:=cSeps;
 
